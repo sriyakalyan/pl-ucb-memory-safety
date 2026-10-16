@@ -8,9 +8,9 @@
   "assessmentSets": [],
   "topics": [
     {
-      "name": "Template",
+      "name": "Memory Safety Exploits",
       "color": "orange2",
-      "description": "Templates to copy as the start for a new question."
+      "description": "Writing malicious inputs to exploit memory vulnerabilities."
     },
     { "name": "Algebra", "color": "red3", "description": "Basic algebra." }
   ],

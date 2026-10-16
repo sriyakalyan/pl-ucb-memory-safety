@@ -26,3 +26,20 @@ $ node dist/server.js --migrate-and-exit
       "statusCode": 404,
       "json": null
     }
+[18:38:10.285] [32mINFO[39m: [36mLaunching workspace-1-1 (useInitialZip=false)[39m
+[18:38:10.447] [32mINFO[39m: [36mPulling docker image: jalmario22/pl-gdb-terminal[39m
+[18:38:11.373] [31mERROR[39m: [36mError pulling "jalmario22/pl-gdb-terminal" image; attempting to fall back to cached version.[39m
+    err: {
+      "type": "Error",
+      "message": "(HTTP code 404) unexpected - no matching manifest for linux/arm64/v8 in the manifest list entries: no match for platform in manifest: not found ",
+      "stack":
+          Error: (HTTP code 404) unexpected - no matching manifest for linux/arm64/v8 in the manifest list entries: no match for platform in manifest: not found 
+              at /PrairieLearn/node_modules/.pnpm/docker-modem@5.0.7_supports-color@7.2.0/node_modules/docker-modem/lib/modem.js:389:17
+              at handler (/PrairieLearn/node_modules/.pnpm/docker-modem@5.0.7_supports-color@7.2.0/node_modules/docker-modem/lib/modem.js:432:11)
+              at IncomingMessage.<anonymous> (/PrairieLearn/node_modules/.pnpm/docker-modem@5.0.7_supports-color@7.2.0/node_modules/docker-modem/lib/modem.js:421:9)
+              at IncomingMessage.emit (node:events:526:24)
+              at endReadableNT (node:internal/streams/readable:1764:12)
+              at process.processTicksAndRejections (node:internal/process/task_queues:90:21)
+      "statusCode": 404,
+      "json": null
+    }

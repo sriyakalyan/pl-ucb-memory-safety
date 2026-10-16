@@ -1,6 +1,6 @@
-`pl-memory-exploit` element
+`pl-gdb` element
 
-Displays a terminal environment with gdb capabilities. Contains a file editor for editing input file
+Displays a terminal environment with only gdb capabilities. Contains a file editor for editing input file
 
 ## Customization
 
