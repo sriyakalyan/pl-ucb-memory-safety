@@ -1,0 +1,14 @@
+{
+  "uuid": "bf32b139-b837-4763-a31e-262f90ec9e74",
+  "title": "GDB Terminal",
+  "topic": "Template",
+  "tags": ["formative"],
+  "type": "v3",
+  "singleVariant": true,
+  "workspaceOptions": {
+    "image": "jalmario22/pl-gdb-terminal",
+    "port": 8080,
+    "home": "/home/student",
+    "enableNetworking": false
+  }
+}

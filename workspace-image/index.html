@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GDB</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/xterm@5.3.0/css/xterm.min.css" />
+  <style>
+    html, body { height: 100%; margin: 0; background: #1a1a1a; }
+    #terminal { height: 100%; padding: 8px; box-sizing: border-box; }
+  </style>
+</head>
+<body>
+  <div id="terminal"></div>
+  <script src="https://cdn.jsdelivr.net/npm/xterm@5.3.0/lib/xterm.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/xterm-addon-fit@0.8.0/lib/xterm-addon-fit.min.js"></script>
+  <script>
+    const term = new Terminal({
+      fontSize: 16,
+      fontFamily: '"Fira Code", Menlo, monospace',
+      cursorBlink: true,
+      theme: { background: '#1a1a1a', foreground: '#f0f0f0', cursor: '#4299e1' },
+    });
+    const fit = new FitAddon.FitAddon();
+    term.loadAddon(fit);
+    term.open(document.getElementById('terminal'));
+    fit.fit();
+
+    // Relative to wherever PrairieLearn proxies this page (rewriteUrl: true).
+    const base = window.location.pathname.replace(/\/+$/, '');
+    const proto = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+    const ws = new WebSocket(`${proto}//${window.location.host}${base}/terminals/main`);
+
+    const sendSize = () => {
+      if (ws.readyState === WebSocket.OPEN)
+        ws.send(JSON.stringify(['set_size', term.rows, term.cols]));
+    };
+    ws.onopen = () => { sendSize(); term.focus(); };
+    ws.onmessage = (e) => {
+      const [type, data] = JSON.parse(e.data);
+      if (type === 'stdout') term.write(data);
+    };
+    ws.onclose = () =>
+      term.write('\r\n\x1b[33m[gdb session ended. Reload this page to start a new one.]\x1b[0m\r\n');
+    ws.onerror = () => term.write('\r\n\x1b[31m[Connection error.]\x1b[0m\r\n');
+
+    term.onData((d) => {
+      if (ws.readyState === WebSocket.OPEN) ws.send(JSON.stringify(['stdin', d]));
+    });
+    term.onResize(sendSize);
+    new ResizeObserver(() => fit.fit()).observe(document.getElementById('terminal'));
+  </script>
+</body>
+</html>
